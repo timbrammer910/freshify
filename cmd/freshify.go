@@ -10,7 +10,7 @@ import (
 )
 
 var args struct {
-	ConfigFilename string `arg:"--config" default:"conf/freshly.yml" help:"path to config file"`
+	ConfigFilename string `arg:"--config" default:"conf/freshify.yml" help:"path to config file"`
 }
 
 func main() {
