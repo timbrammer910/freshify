@@ -1,1 +1,6 @@
-
+spotify:
+  playlists:
+    - Intentar
+    - Listen
+  maxAge: 60
+  minSongs: 60

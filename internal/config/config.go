@@ -4,17 +4,19 @@ import (
 	"io/ioutil"
 
 	"github.com/kelseyhightower/envconfig"
-	"github.com/timbrammer910/freshly/internal/authenticate"
-	"github.com/zmb3/spotify/v2"
 	"gopkg.in/yaml.v2"
 )
 
 type Config struct {
-	AccessToken     string `yaml:"-" envconfig:"ACCESS_TOKEN" required:"true"`
-	RefreshToken    string `yaml:"-" envconfig:"REFRESH_TOKEN" required:"true"`
-	Token           string `yaml:"-" envconfig:"SPOTIFY_ID" required:"true"`
-	SignatureSecret string `yaml:"-" envconfig:"SPOTIFY_SECRET" required:"true"`
-	SpotifyClient   *spotify.Client
+	// AccessToken   string `yaml:"-" envconfig:"ACCESS_TOKEN" required:"true"`
+	RefreshToken  string `yaml:"-" envconfig:"REFRESH_TOKEN" required:"true"`
+	SpotifyID     string `yaml:"-" envconfig:"SPOTIFY_ID" required:"true"`
+	SpotifySecret string `yaml:"-" envconfig:"SPOTIFY_SECRET" required:"true"`
+	Spotify       struct {
+		Playlists []string `yaml:"playlists"`
+		MaxAge    int      `yaml:"maxAge"`
+		MinSongs  int      `yaml:"minSongs"`
+	} `yaml:"spotify"`
 }
 
 func New(filename string) (*Config, error) {
@@ -35,13 +37,6 @@ func New(filename string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	spotifyClient, err := authenticate.GetAccessToken(cfg.AccessToken, cfg.RefreshToken)
-	if err != nil {
-		return nil, err
-	}
-
-	cfg.SpotifyClient = spotifyClient
 
 	return &cfg, nil
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/creasty/defaults"
 	"github.com/timbrammer910/freshly/internal/authenticate"
 	"github.com/timbrammer910/freshly/internal/config"
+	"github.com/timbrammer910/freshly/internal/spotify"
 )
 
 var args struct {
@@ -28,8 +29,14 @@ func main() {
 		os.Exit(0)
 	}
 
-	_, err := config.New(args.ConfigFilename)
+	cfg, err := config.New(args.ConfigFilename)
 	if err != nil {
+		log.Fatal(err)
+	}
+
+	s := spotify.New(cfg)
+
+	if err := s.Freshify(cfg.Spotify.Playlists, cfg.Spotify.MaxAge, cfg.Spotify.MinSongs); err != nil {
 		log.Fatal(err)
 	}
 
