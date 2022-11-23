@@ -100,13 +100,5 @@ func RefreshToken(rtoken, clientId, clientSecret string) (string, error) {
 		return "", fmt.Errorf("token refresh error: %s\n", req.Status)
 	}
 
-	fmt.Printf("Status: %s\n", req.Status)
-
-	// if respErr != nil {
-	// 	log.Fatalf("token refresh error: %v\n", respErr)
-	// }
-
-	fmt.Printf("Got Token: %v\n", resp)
-
 	return resp.AccessToken, nil
 }
