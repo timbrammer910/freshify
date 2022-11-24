@@ -1,0 +1,17 @@
+name: Run freshify
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  Run-Freshify:
+    name: Go Run
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.19.3
+      - name: Run freshify.go
+        run: go run cmd/freshify.go
+
