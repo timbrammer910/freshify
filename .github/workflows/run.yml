@@ -2,6 +2,7 @@ name: Run freshify
 on:
   schedule:
     - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   Run-Freshify:
