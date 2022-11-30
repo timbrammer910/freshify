@@ -73,7 +73,7 @@ func (s *Spotify) filterPlaylists(playlists []string, min int) ([]spotify.ID, er
 		var found bool
 		for _, e := range list {
 			if playlist == e.Name {
-				if int(e.Tracks.Total) <= min {
+				if e.Owner.ID == s.user && int(e.Tracks.Total) <= min {
 					log.Infof("playlist - %s contains too few tracks, skipping...\n", strings.ToLower(e.Name))
 					found = true
 					break
